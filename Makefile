@@ -36,5 +36,8 @@ $(PLOTS): $(GEOTIFFS) R/make_plots.R data/ecoregions
 	rm Rplots.pdf
 	rm *.Rout
 
+	# remove any prior output from the s3 bucket
+	aws s3 rm s3://curcbucket/noaa-output --recursive
+
 	# export the output back to the s3 bucket
 	aws s3 cp output s3://curcbucket/noaa-ouput --recursive
