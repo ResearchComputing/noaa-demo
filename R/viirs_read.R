@@ -46,5 +46,5 @@ viirs <- viirs_read(input_file = 'data/viirs.h5',
                     crs_out = "+init=epsg:4326",
                     keep = 50000)
 
-writeRaster(viirs, 'geotiffs/viirs_ndvi_raw.tif',
+writeRaster(viirs, 'output/geotiffs/viirs_ndvi_raw.tif',
             format = 'GTiff', overwrite = TRUE)

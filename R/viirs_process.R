@@ -4,7 +4,7 @@ library(raster)
 library(rgdal)
 
 # load data
-viirs <- raster('geotiffs/viirs_ndvi_raw.tif')
+viirs <- raster('output/geotiffs/viirs_ndvi_raw.tif')
 
 # processing: punch out waterbodies, match resolutions/extent ----------------
 # load water polygons & match projections
@@ -15,5 +15,5 @@ water <- spTransform(water, projection(viirs))
 viirs <- mask(viirs, water, inverse = TRUE)
 
 # save output as geotiff (overwrites original)
-writeRaster(viirs, 'geotiffs/viirs_ndvi.tif',
+writeRaster(viirs, 'output/geotiffs/viirs_ndvi.tif',
             format = 'GTiff', overwrite = TRUE)

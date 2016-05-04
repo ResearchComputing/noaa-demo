@@ -1,8 +1,9 @@
 # Makefile for the noaa demo
-PLOTS = plots/scatter1.pdf plots/scatter2.pdf plots/levelplots.pdf plots/surfs.pdf
-GEOTIFFS = geotiffs/viirs_ndvi.tif geotiffs/smap.tif
+PLOTS = output/plots/scatter1.pdf output/plots/scatter2.pdf output/plots/levelplots.pdf output/plots/surfs.pdf
+GEOTIFFS = output/geotiffs/viirs_ndvi.tif output/geotiffs/smap.tif
+OUTPUT = $(GEOTIFFS) $(PLOTS)
 
-all: $(GEOTIFFS) $(PLOTS)
+all: $(OUTPUT)
 
 data:
 	mkdir -p data
@@ -21,16 +22,16 @@ data/hydrology:
 
 # convert the hdf5 files to geotiffs with matched projections and save
 $(GEOTIFFS): data/viirs.h5 R/viirs_read.R R/viirs_process.R data/hydrology data/smap.h5 R/smap_read.R R/smap_process.R
-	mkdir -p geotiffs
+	mkdir -p output/geotiffs
 	R CMD BATCH --vanilla R/viirs_read.R
 	R CMD BATCH --vanilla R/viirs_process.R
 	R CMD BATCH --vanilla R/smap_read.R
 	R CMD BATCH --vanilla R/smap_process.R
-	rm geotiffs/*_raw.tif
+	rm output/geotiffs/*_raw.tif
 
 # make some plots and do some simple analysis
 $(PLOTS): $(GEOTIFFS) R/make_plots.R data/ecoregions
-	mkdir -p plots
+	mkdir -p output/plots
 	R CMD BATCH --vanilla R/make_plots.R
 	rm Rplots.pdf
 	rm *.Rout

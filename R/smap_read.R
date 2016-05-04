@@ -26,5 +26,5 @@ smap <- smap_read(input_file = 'data/smap.h5',
                      dataset = 'sm_rootzone',
                      crs_out = "+init=epsg:4326")
 
-writeRaster(smap, 'geotiffs/smap_raw.tif',
+writeRaster(smap, 'output/geotiffs/smap_raw.tif',
             format = 'GTiff', overwrite = TRUE)
